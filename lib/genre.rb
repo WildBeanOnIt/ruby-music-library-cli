@@ -1,4 +1,4 @@
-class Artist
+class Genre
 
     attr_accessor :name
 
@@ -15,30 +15,22 @@ class Artist
     def self.destroy_all
         all.clear
     end
-
+    
     def save
         self.class.all << self
         self
     end
-
 
     def self.create(name)
         new(name).save
     end
 
     def songs
-        @song = Song.all.select do |song|
-            song.artist == self
-        end
+        Song.all { |song| song.genre == self }
     end
 
-    def add_song(song)
-        # binding.pry
-        song.artist = self unless song.artist
-    end
-
-    def genres
-        songs.collect { |s| s.genre }.uniq
+    def artists
+        songs.collect { |g| g.artist == self }
     end
 
 end
